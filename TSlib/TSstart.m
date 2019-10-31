@@ -1,1 +1,0 @@
-function [ result ] = TSstart()%TSSTART Used to indicate start of a rangeresult = 0;
