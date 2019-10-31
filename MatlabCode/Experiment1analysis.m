@@ -5,33 +5,33 @@
 % in the old chambers.
 
 
-TSinitexperiment('SessNumberReplicAllGrps',3,[23 24 25 26 27 28 29 30 31 32 33 34 65 66 67 68 69 70],'Mouse','Gallistel')
-
-%Creating structure
-
-for S=1:6;
-    Experiment.Subject(S).Sex='M';
-    Experiment.Subject(S).Strain = 'C57BL/6';
-end
-    
-% DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
-%        '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
-    
-% for S=1:12;
-%     Experiment.Subject(S).Id = ID(S);
-%     Experiment.Subject(S).BirthDate = DOB{S};
+% TSinitexperiment('SessNumberReplicAllGrps',3,[23 24 25 26 27 28 29 30 31 32 33 34 65 66 67 68 69 70],'Mouse','Gallistel')
+% 
+% %Creating structure
+% 
+% for S=1:6;
+%     Experiment.Subject(S).Sex='M';
+%     Experiment.Subject(S).Strain = 'C57BL/6';
 % end
-
-
-% TSloadexperiment('C:\Documents and Settings\gallistellab\Desktop\Stathis\FewSessGrpExperiment');
-
-TSloadsessions('C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication\AllData');
-% Loads data from a session into TSData subfield of Session subfield of Subject subfield
-
-TSimporteventcodes('matlabcodes.m')
-
-cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication'
-TSsaveexperiment('SessNumberReplicAllGrps_0');
+%     
+% % DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
+% %        '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
+%     
+% % for S=1:12;
+% %     Experiment.Subject(S).Id = ID(S);
+% %     Experiment.Subject(S).BirthDate = DOB{S};
+% % end
+% 
+% 
+% % TSloadexperiment('C:\Documents and Settings\gallistellab\Desktop\Stathis\FewSessGrpExperiment');
+% 
+% TSloadsessions('C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication\AllData');
+% % Loads data from a session into TSData subfield of Session subfield of Subject subfield
+% 
+% TSimporteventcodes('matlabcodes.m')
+% 
+% cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication'
+% TSsaveexperiment('SessNumberReplicAllGrps_0');
 cd 'C:\Program Files\MATLAB\R2006b'
 
 

@@ -1,40 +1,40 @@
-% This scripts runs the basic analysis for everyday observation of the
-% mice's behavior in the magazine approach paradigm. A white noise is
-% followed by food 10 sec later (marked with a clicker). There is a 10-s
-% pre-CS period for baseline levels of responding. The experiment was run
-% in the new chambers.
-
-
-TSinitexperiment('SessnsRgrdlsTrials',5,[47 48 49 50 51 52 53 54 55 56 57 58],'Mouse','Gallistel')
-% Creating structure
-
-for S=1:12;
-    Experiment.Subject(S).Sex='M';
-    Experiment.Subject(S).Strain = 'C57BL/6';
-end
-    
-% DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
-%        '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
-    
-% for S=1:10;
-%     Experiment.Subject(S).Id = ID(S);
-%     Experiment.Subject(S).BirthDate = DOB{S};
+% % This scripts runs the basic analysis for everyday observation of the
+% % mice's behavior in the magazine approach paradigm. A white noise is
+% % followed by food 10 sec later (marked with a clicker). There is a 10-s
+% % pre-CS period for baseline levels of responding. The experiment was run
+% % in the new chambers.
+% 
+% 
+% TSinitexperiment('SessnsRgrdlsTrials',5,[47 48 49 50 51 52 53 54 55 56 57 58],'Mouse','Gallistel')
+% % Creating structure
+% 
+% for S=1:12;
+%     Experiment.Subject(S).Sex='M';
+%     Experiment.Subject(S).Strain = 'C57BL/6';
 % end
-
-cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessnsRgrdlsTrials'
-TSsaveexperiment('SessnsRgrdlsTrials_0');
-cd 'C:\Program Files\MATLAB\R2006b'
-
-% TSloadexperiment('C:\Documents and Settings\Gallistellab\Desktop\Stathis\SessnsRgrdlsTrials\SessnsRgrdlsTrials_1');
-
-TSloadsessions('C:\Program Files\MATLAB\R2006b\Experiments\SessnsRgrdlsTrials\Data');
-% Loads data from a session into TSData subfield of Session subfield of Subject subfield
-
-TSimporteventcodes('matlabcodes.m')
-
-cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessnsRgrdlsTrials'
-TSsaveexperiment('SessnsRgrdlsTrials_0');
-cd 'C:\Program Files\MATLAB\R2006b'
+%     
+% % DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
+% %        '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
+%     
+% % for S=1:10;
+% %     Experiment.Subject(S).Id = ID(S);
+% %     Experiment.Subject(S).BirthDate = DOB{S};
+% % end
+% 
+% cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessnsRgrdlsTrials'
+% TSsaveexperiment('SessnsRgrdlsTrials_0');
+% cd 'C:\Program Files\MATLAB\R2006b'
+% 
+% % TSloadexperiment('C:\Documents and Settings\Gallistellab\Desktop\Stathis\SessnsRgrdlsTrials\SessnsRgrdlsTrials_1');
+% 
+% TSloadsessions('C:\Program Files\MATLAB\R2006b\Experiments\SessnsRgrdlsTrials\Data');
+% % Loads data from a session into TSData subfield of Session subfield of Subject subfield
+% 
+% TSimporteventcodes('matlabcodes.m')
+% 
+% cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessnsRgrdlsTrials'
+% TSsaveexperiment('SessnsRgrdlsTrials_0');
+% cd 'C:\Program Files\MATLAB\R2006b'
     
 %%
 %-----------------------------RASTER PLOTS -------------------------

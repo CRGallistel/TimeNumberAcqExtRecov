@@ -5,8 +5,11 @@ TSlib code works with them.
 %}
 
 %%------------Experiment 1
-addpath('DataFiles','MatlabCode','MatlabCode/TSlib')
-TSloadexperiment('DataFiles/Experiment1') % load Experiment structure
+addpath('DataFiles','MatlabCode','MatlabCode/TSlibBasic') % puts TSlib
+% toolbox on Matlab's search path
+TSloadexperiment('DataFiles/Experiment1') % load Experiment structure. This
+% will work only if the DataFiles directory is a subdirectory of Matlab's
+% current directory
 TSexperimentbrowser % open browser
 %%
 % for S=[1:6 13:18] % setting Phase field

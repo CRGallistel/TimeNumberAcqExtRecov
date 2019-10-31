@@ -4,22 +4,22 @@
 % pre-CS period for baseline levels of responding. The experiment was run
 % in the old chambers.
 
-
-TSinitexperiment('SessionNumberReplic2',4,[35 36 37 38 39 40 41 42 43 44 45 46],'Mouse','Gallistel')
-% Creating structure
-
-for S=1:10;
-    Experiment.Subject(S).Sex='M';
-    Experiment.Subject(S).Strain = 'C57BL/6';
-end
-    
-DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
-       '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
-    
+% 
+% TSinitexperiment('SessionNumberReplic2',4,[35 36 37 38 39 40 41 42 43 44 45 46],'Mouse','Gallistel')
+% % Creating structure
+% 
 % for S=1:10;
-%     Experiment.Subject(S).Id = ID(S);
-%     Experiment.Subject(S).BirthDate = DOB{S};
+%     Experiment.Subject(S).Sex='M';
+%     Experiment.Subject(S).Strain = 'C57BL/6';
 % end
+%     
+% DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
+%        '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
+%     
+% % for S=1:10;
+% %     Experiment.Subject(S).Id = ID(S);
+% %     Experiment.Subject(S).BirthDate = DOB{S};
+% % end
 % 
 %%
 TSloadexperiment('/MATLAB/R2006b/Experiments/SessionNumber/SessionNumber_5');

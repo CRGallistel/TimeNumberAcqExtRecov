@@ -7,38 +7,38 @@
 
 TSinitexperiment('SessionNumberReplic2',4,[35 36 37 38 39 40 41 42 43 44 45 46],'Mouse','Gallistel')
 % Creating structure
-
-for S=1:12;
-    Experiment.Subject(S).Sex='M';
-    Experiment.Subject(S).Strain = 'C57BL/6';
-end
-    
-% DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
-%        '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
-    
-% for S=1:10;
-%     Experiment.Subject(S).Id = ID(S);
-%     Experiment.Subject(S).BirthDate = DOB{S};
+% 
+% for S=1:12;
+%     Experiment.Subject(S).Sex='M';
+%     Experiment.Subject(S).Strain = 'C57BL/6';
 % end
-
-cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication2'
-TSsaveexperiment('SessionNumberReplic2_0');
-cd 'C:\Program Files\MATLAB\R2006b'
-
-
-% TSloadexperiment('C:\Documents and Settings\Gallistellab\Desktop\Stathis\SessionNumberReplication2\SessionNumberReplic2_1');
-
-TSloadsessions('C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication2\Data');
-% Loads data from a session into TSData subfield of Session subfield of Subject subfield
-
-% TSimporteventcodes('matlabcodes.m')
-
-cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication2'
-TSsaveexperiment('SessionNumberReplic2_3');
-cd 'C:\Program Files\MATLAB\R2006b'
-
-% TSsaveexperiment('W:\Experiments\Stathis\Dissertation\SessionNumberReplication2\SessionNumberReplic2_1');
-% % save a copy on the server
+%     
+% % DOB = {'01/15/06' '03/31/06' '01/27/06' '02/11/06' '02/11/06' ...
+% %        '01/15/06' '02/11/06' '03/31/06' '01/27/06' '02/11/06'};
+%     
+% % for S=1:10;
+% %     Experiment.Subject(S).Id = ID(S);
+% %     Experiment.Subject(S).BirthDate = DOB{S};
+% % end
+% 
+% cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication2'
+% TSsaveexperiment('SessionNumberReplic2_0');
+% cd 'C:\Program Files\MATLAB\R2006b'
+% 
+% 
+% % TSloadexperiment('C:\Documents and Settings\Gallistellab\Desktop\Stathis\SessionNumberReplication2\SessionNumberReplic2_1');
+% 
+% TSloadsessions('C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication2\Data');
+% % Loads data from a session into TSData subfield of Session subfield of Subject subfield
+% 
+% % TSimporteventcodes('matlabcodes.m')
+% 
+% cd 'C:\Program Files\MATLAB\R2006b\Experiments\SessionNumberReplication2'
+% TSsaveexperiment('SessionNumberReplic2_3');
+% cd 'C:\Program Files\MATLAB\R2006b'
+% 
+% % TSsaveexperiment('W:\Experiments\Stathis\Dissertation\SessionNumberReplication2\SessionNumberReplic2_1');
+% % % save a copy on the server
     
 
 %% -----------------------------RASTER PLOTS -------------------------
