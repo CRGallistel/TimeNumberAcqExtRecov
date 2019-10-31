@@ -1,1 +1,0 @@
-function [ result ] = TSend()%TSEND Used to indicate end of a rangeresult = -1;
