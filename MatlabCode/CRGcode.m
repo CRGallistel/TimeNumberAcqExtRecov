@@ -1,7 +1,12 @@
 %{
 this is my  code applied to Stathis's Experiment structures after I updated
 them using the TSupdateStructure function so that the current (10/23/2019)
-TSlib code works with them.
+TSlib code works with them. For expository reasons, the numbering of the
+groups in the MS differs from the numbering in this script: Group 4 from
+what was originally the 5th Experiment became Group 1. The groups in
+Experiment 1 became Groups 2.1, 2.2 & 2.3. The groups in Experiment 2
+became Groups 3.1 & 3.2. Experiment 3 (the within-subject experiment) was
+not in the MS. The groups in Experiment 4 became Groups 4.1 & 4.2
 %}
 
 %%------------Experiment 1
@@ -860,22 +865,49 @@ TSapplystat('CumRecPkDurElevScores','PkgDurElevationScores',@cumsum) % subject l
 c=20; % decision criterion for acquisition # of pokes by which cum rec of
 % pokes must exceed its minimum
 TSapplystat('AcqTrial','CumRecPkElevationScores' ,@Acq,c)
-%%
+%% Figure 1 in MS
+close all
 TSlimit('Subjects','all')
 TSapplystat('','PkNumElevationScores',@TSplotcumrecs,'Rows',6,'Cols',2,...
-    'Xlm',[0 350],'Xlbl','','LeftYlbl','')
+    'Xlm',[0 350],'Xlbl','','LeftYlbl','','LeftYlm',[0 2000])
+H1 = gcf;
+H2 = figure;
+
 for plt=1:12
+    figure(H1)
     subplot(6,2,plt)
     hold on
     at=Experiment.Subject(plt).AcqTrial;
     plot([at at],ylim,'k-','LineWidth',1)
+    if plt<7
+        NmAcTrls = 28*2.5;
+    else
+       NmAcTrls = 7*40; 
+    end
+    TrlsToExt = Experiment.Subject(plt).TrlsToExt;
+    EndExt = TrlsToExt+NmAcTrls;
+    plot([NmAcTrls NmAcTrls],ylim,'k:',[EndExt EndExt],ylim,'k:')
+        
     if plt>10
         xlabel('Trial','FontSize',18)
+        
     end
     if plt==7
         ylabel('# CS pokes - # PreCS pokes','FontSize',18)
     end
+    
+    EndScore = Experiment.Subject(plt).CumRecPkElevationScores(NmAcTrls-1);
+    figure(H2)
+    subplot(6,2,plt)
+    plot(Experiment.Subject(plt).CumRecPkElevationScores(NmAcTrls:end)-EndScore,...
+        'k-','LineWidth',1)
+    hold on
+    xlim([0 80])
+    ylim([0 100])
+    plot([TrlsToExt TrlsToExt],ylim,'k:')
+    set(gca,'YTick',[0 100])
 end    
+
 
 %%
 TSapplystat('PkNumDiff',{'CS_PkNumSes' 'PreCS_PkNumSes'},@minus) % session level
@@ -1257,7 +1289,7 @@ LVlngsml = ~LVspan&LVnmses; % flags condition with long training span but
    % only few (7) sessions
 
 
-%% Figure 3 in MS
+%% Figure 5 in revised MS (run preceding cell first)
 F1 = figure;
 sb(1)=subplot(3,2,1);
 plot(LT.TtlTrls,LT.PkNumDiffLstSes,'k*')
@@ -1270,7 +1302,7 @@ plot([70 280],[mean(LT.PkNumDiffLstSes(LVnmtrls)),mean(LT.PkNumDiffLstSes(~LVnmt
 plot(xlim,[0 0],'k--')
 [~,p,CI,STATS] = ttest2(LT.PkNumDiffLstSes(~LVnmtrls),LT.PkNumDiffLstSes(LVnmtrls))
 StatCA{1}='[~,p,CI,STATS] = ttest2(LT.PkNumDiffLstSes(~LVnmtrls),LT.PkNumDiffLstSes(LVnmtrls))';
-StatCA{2}=char({'t(52)=5.0110';'p<<.001';'CI=[2.4 5.5]';'sd = 2.4'})
+StatCA{2}=char({'t(52)=5.0110';'p<<.001';'CI=[2.4 5.5]';'d = 1.6'})
 text(120,8.8,StatCA{2})
 [Wt,OA,OF]=BF2(LT.PkNumDiffLstSes(LVnmtrls),LT.PkNumDiffLstSes(~LVnmtrls),...
     [-inf inf],[-STATS.sd STATS.sd])
@@ -1369,7 +1401,7 @@ plot([7 27],[mean(LT.d21PkNumDiff(LVspan)) mean(LT.d21PkNumDiff(~LVspan))],...
 plot(xlim,[0 0],'k--')
 [~,p,CI,STATS] = ttest2(LT.d21PkNumDiff(~LVspan),LT.d21PkNumDiff(LVspan))
 StatCA{21}='[~,p,CI,STATS] = ttest2(LT.d21PkNumDiff(~LVspan),LT.d21PkNumDiff(LVspan))';
-StatCA{22}=char({'t(52)=4.6';'p<<.001';'CI=[3.2 8.2]';'sd=4.5'});
+StatCA{22}=char({'t(52)=4.6';'p<<.001';'CI=[3.2 8.2]';'d=1.3'});
 text(1,23,StatCA{22})
 [Wt,OA,OF]=BF2(LT.d21PkNumDiff(LVspan),LT.d21PkNumDiff(~LVspan),[-inf inf],[-STATS.sd STATS.sd])
 StatCA{23}='[Wt,OA,OF]=BF2(LT.d21PkNumDiff(LVspan),LT.d21PkNumDiff(~LVspan),[-inf inf],[-STATS.sd STATS.sd])';
@@ -1418,7 +1450,7 @@ for c=1:length(LT.Properties.UserData);disp(LT.Properties.UserData{c});end
 
 %%
 save LongTable LT
-%% Figure 1new
+%% Figure 3 in revised MS
 %% logical vectors
 LVnmses = LT.NumSes<9; 
 LVnmtrls = LT.TtlTrls<90;
@@ -1426,22 +1458,24 @@ LVspan = LT.TrngSpan<9;
 LVlngsml = ~LVspan&LVnmses; % flags condition with long training span but
    % only few (7) sessions
 F=figure; % Figure 2 in MS
-plot(LT.NumSes(LVnmses&LVnmtrls)+1,LT.AcqTrl(LVnmses&LVnmtrls),'k*')
+plot(LT.NumSes(LVnmses&LVnmtrls)+1,LT.AcqTrl(LVnmses&LVnmtrls),'k*','MarkerSize',10)
 % few sessions & few trials
 set(gca,'FontSize',12)
 hold on
-plot(LT.NumSes(LVnmses&~LVnmtrls),LT.AcqTrl(LVnmses&~LVnmtrls),'r*') % few
+plot(LT.NumSes(LVnmses&~LVnmtrls),LT.AcqTrl(LVnmses&~LVnmtrls),'ks','MarkerSize',10) % few
 % sessions & many trials
-plot(LT.NumSes(~LVnmses&LVnmtrls)-1,LT.AcqTrl(~LVnmses&LVnmtrls),'g*') % many
+plot(LT.NumSes(~LVnmses&LVnmtrls)-1,LT.AcqTrl(~LVnmses&LVnmtrls),'kv','MarkerSize',10) % many
 % sessions and few trials
-plot(LT.NumSes(~LVnmses&~LVnmtrls),LT.AcqTrl(~LVnmses&~LVnmtrls),'b*') % many
+plot(LT.NumSes(~LVnmses&~LVnmtrls),LT.AcqTrl(~LVnmses&~LVnmtrls),'k^','MarkerSize',10) % many
 % sessions and many trials
-xlabel('Number of Acquisition Sessions')
-ylabel('Trials to Acquisition')
+xlabel('Span of Acquisition (Days)','FontSize',18)
+ylabel('Trials to Acquisition','FontSize',18)
 plot([7 28],[mean(LT.AcqTrl(LVnmses&~LVnmtrls)) mean(LT.AcqTrl(~LVnmses&~LVnmtrls))],'k-o',...
     'MarkerSize',10) % few sessions w lots of trials vs many sessions w lots of trials
 xlim([0 30])
-%
+legend('FewSesWithFewTrls','FewSesWithMnyTrls','MnySesWithFewTrls',...
+    'LngSpan&Mny-TrlSes','location','N','FontSize',14)
+%%
 % STATISTICAL COMPARISONS FOR FIGURE 2
 [~,p,CI,STATS] = ttest2(LT.AcqTrl(LVnmses&~LVnmtrls),LT.AcqTrl(~LVnmses&~LVnmtrls))
 % short span w lots of trials/session vs long span w lots of trials/session
@@ -1489,3 +1523,114 @@ legend('FewSesWithFewTrls','FewSesWithMnyTrls','MnySesWithFewTrls',...
 StatCA{45}='[~,p,CI,STATS] = ttest2(LT.AcqTrl(49:54),LT.AcqTrl(43:48))';
 StatCA{46} = '[Wt,OA,OF] = BF2(LT.AcqTrl(49:54),LT.AcqTrl(43:48),[-inf inf],2*[-STATS.sd STATS.sd])';
 StatCA{47} = char({'E4G1vsE4G2';'t(10)=5.16,p<<.001';'BF almost 1000:1';'against Null'});
+
+%% Sessions to acquisition in Experiment 4
+TSlimit('Subjects',1:6)
+trlspersess1 = 2.5;
+TSapplystat('SessionsToAcq','AcqTrial',@rdivide,trlspersess1)
+TScombineover('Grp41sesToAcq','SessionsToAcq')
+TSlimit('Subjects',7:12)
+trlspersess2 = 40;
+TSapplystat('SessionsToAcq','AcqTrial',@rdivide,trlspersess2)
+TScombineover('Grp42sesToAcq','SessionsToAcq')
+
+%% Cumulative Context Time at Acquisition
+TSlimit('Subjects','all')
+TSlimit('Sessions','all')
+TScombineover('MatlabStartDates','MatlabStartDate')
+TScombineover('MatlabEndDates','MatlabEndDate')
+TSapplystat('SessionDurations',{'MatlabEndDates' 'MatlabStartDates'},@SesDurs)
+TSapplystat('CumCntxtTmAtAcq',{'SessionsToAcq' 'SessionDurations'},@CntxtToAcq)
+TSlimit('Subjects',1:6)
+TScombineover('Grp41cumCntxtTmAtAcq','CumCntxtTmAtAcq')
+TSlimit('Subjects',7:12)
+TScombineover('Grp42cumCntxtTmAtAcq','CumCntxtTmAtAcq')
+%% Comparison of Context Times at Acquisition
+[mean(Experiment.Grp41cumCntxtTmAtAcq) mean(Experiment.Grp42cumCntxtTmAtAcq)]
+[~,p,CI,STATS] = ttest2(Experiment.Grp41cumCntxtTmAtAcq,Experiment.Grp42cumCntxtTmAtAcq)
+%{
+means: 116.3110  198.4417
+
+p =9.3356e-04
+
+CI =-121.6396
+    -42.6218
+
+    tstat: -4.6318
+       df: 10
+       sd: 30.7124
+
+Cohen's d = (198.4-116.31)/30.7 =  2.6739
+%}
+[Wt,Oa,Of] = BF2(Experiment.Grp41cumCntxtTmAtAcq,Experiment.Grp42cumCntxtTmAtAcq,...
+    [-inf inf],[-2*31 2*31])
+%{
+Wt = 3.3332
+Oa =2.1537e+03
+%}
+%% Figure 1 in MS Recovery in after 3 to 7 days
+figure
+plot(3*ones(6,1),LT.d7PkNumDiff(1:6),'k*',...
+    4*ones(6,1),LT.d7PkNumDiff(7:12),'k*',...
+    5*ones(6,1),LT.d7PkNumDiff(13:18),'k*',...
+    6*ones(6,1),LT.d7PkNumDiff(19:24),'k*',...
+    7*ones(6,1),LT.d7PkNumDiff(25:30),'k*',...
+    8*ones(6,1),LT.d7PkNumDiff(31:36),'k*',...
+    9*ones(6,1),LT.d7PkNumDiff(37:42),'k*',...
+    ones(6,1),LT.d7PkNumDiff(43:48),'k*',...
+    2*ones(6,1),LT.d7PkNumDiff(49:54),'k*','MarkerSize',10)
+xlim([0 10])
+hold on
+plot(xlim,[0 0],'k--')
+set(gca,'FontSize',14,'XTick',1:9,'XTickLabel',...
+    {'1.1' '1.2' '2.1' '2.2' '2.3'  '3.1' '3.2' '4.1' '4.2' })
+xlabel('Group')
+ylabel('Cumulative Elevation Score')
+%% Span
+LV21=strcmp(LT.Cond,'7_40_7_280'); % Groups 1.2 & 2.1 (new #ing): 7-day span;
+% 7 sessions; 280 trials
+LV22 =strcmp(LT.Cond,'28_10_28_280'); % Exper 2.2: 28-day span 280;
+% 28 sessions; 280 trials
+LV23 = strcmp(LT.Cond,'7_40_28_280'); % Exper 2.3: 28-day span;
+% 7 sessions; 280 trials
+figure
+plot(7*ones(12,1),LT.d21PkNumDiff(LV21),'k*',25*ones(6,1),LT.d21PkNumDiff(LV22),...
+    'ko',28*ones(6,1),LT.d21PkNumDiff(LV23),'k^')
+xlabel('Span (days)','FontSize',18)
+ylabel('Cum Pk Diff @ 21 Days','FontSize',18)
+legend('7s,40t,7d','28s,10t,28d','7s,40t,28d','FontSize',18)
+
+%% Stathis Figure 1 (Experiment 2 recovery) Figure 6 in MS
+TSloadexperiment('DataFiles/Experiment1')
+TSlimit('Subjects',1:6)
+TScombineover('Grp_7_40_7_Rec2PkNumDiffByTrial','Rec2PkNumDiff')
+TSlimit('Subjects',7:12)
+TScombineover('Grp_28_10_28_Rec2PkNumDiffByTrial','Rec2PkNumDiff')
+TSlimit('Subjects',13:18)
+TScombineover('Grp_7_40_28_Rec2PkNumDiffByTrial','Rec2PkNumDiff')
+%% Reshaping column vectors into 6 (subject) by 4 (trial) array
+TSapplystat('Grp_7_40_7_Rec2PkNumDiffByTrial','Grp_7_40_7_Rec2PkNumDiffByTrial',@reshape,4,6)
+TSapplystat('Grp_7_40_7_Rec2PkNumDiffByTrial','Grp_7_40_7_Rec2PkNumDiffByTrial',@transpose)
+TSapplystat('Grp_28_10_28_Rec2PkNumDiffByTrial','Grp_28_10_28_Rec2PkNumDiffByTrial',@reshape,4,6)
+TSapplystat('Grp_28_10_28_Rec2PkNumDiffByTrial','Grp_28_10_28_Rec2PkNumDiffByTrial',@transpose)
+TSapplystat('Grp_7_40_28_Rec2PkNumDiffByTrial','Grp_7_40_28_Rec2PkNumDiffByTrial',@reshape,4,6)
+TSapplystat('Grp_7_40_28_Rec2PkNumDiffByTrial','Grp_7_40_28_Rec2PkNumDiffByTrial',@transpose)
+%%
+Mn(1,1:4) = mean(Experiment.Grp_7_40_7_Rec2PkNumDiffByTrial);
+stder(1,1:4) = std(Experiment.Grp_7_40_7_Rec2PkNumDiffByTrial)/sqrt(6);
+Mn(2,1:4) = mean(Experiment.Grp_28_10_28_Rec2PkNumDiffByTrial);
+stder(2,1:4) = std(Experiment.Grp_28_10_28_Rec2PkNumDiffByTrial)/sqrt(6);
+Mn(3,1:4) = mean(Experiment.Grp_7_40_28_Rec2PkNumDiffByTrial);
+stder(3,1:4) = std(Experiment.Grp_7_40_28_Rec2PkNumDiffByTrial)/sqrt(6);
+%%
+figure
+errorbar(1:4,Mn(1,:),stder(1,:),'k-o','MarkerSize',10,'LineWidth',1)
+xlim([.5 4.5])
+ylim([-1 6])
+set(gca,'FontSize',18)
+xlabel('Recovery Trial','FontSize',18)
+ylabel('Mean Elevation Score','FontSize',18)
+hold on
+errorbar(gca,1:4,Mn(2,:),stder(2,:),'k-^','MarkerSize',10,'LineWidth',1)
+errorbar(gca,1:4,Mn(3,:),stder(3,:),'k-*','MarkerSize',10,'LineWidth',1)
+legend('7s40t7d','28s10t28d','7s40t28d','location','NE','FontSize',18)
